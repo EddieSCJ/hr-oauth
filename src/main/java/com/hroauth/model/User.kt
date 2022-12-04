@@ -1,11 +1,26 @@
 package com.hroauth.model
 
+import org.springframework.security.core.userdetails.UserDetails
 import java.util.HashSet
 
-data class User(
+class User(
     var id: Long? = null,
     val name: String,
-    val email: String,
-    val password: String,
-    val roles: Set<Role>? = HashSet()
-)
+    private val email: String,
+    private val password: String,
+    private val roles: Set<Role>? = HashSet()
+) : UserDetails {
+    override fun getAuthorities() = roles
+
+    override fun isEnabled() = true
+
+    override fun getUsername() = email
+
+    override fun isCredentialsNonExpired() = true
+
+    override fun getPassword() = password
+
+    override fun isAccountNonExpired() = true
+
+    override fun isAccountNonLocked() = true
+}
