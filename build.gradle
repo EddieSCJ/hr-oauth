@@ -1,12 +1,13 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.0'
-	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.springframework.boot' version '2.7.1'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'org.jetbrains.kotlin.jvm' version '1.8.0-Beta'
 }
 
 group = 'com'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -15,13 +16,15 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2022.0.0-RC2")
+	set('springCloudVersion', "2021.0.5")
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 dependencyManagement {
@@ -32,4 +35,14 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+compileKotlin {
+	kotlinOptions {
+		jvmTarget = "1.8"
+	}
+}
+compileTestKotlin {
+	kotlinOptions {
+		jvmTarget = "1.8"
+	}
 }
